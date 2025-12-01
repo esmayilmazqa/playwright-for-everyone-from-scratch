@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 test("First testcase with fresh browser and context declaration", async ({browser}) =>
 {
@@ -10,5 +10,7 @@ test("First testcase with fresh browser and context declaration", async ({browse
 test.only("second test without fresh instance", async ({page}) => {
     await page.goto("https://google.com");
     // await page.pause(); // browser does not close
+    console.log(await page.title()); // print page title
+    await expect(page).toHaveTitle("Google"); // Received: ""
 
 });
