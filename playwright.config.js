@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, devices } from '@playwright/test';
+import { chromium, defineConfig, devices } from '@playwright/test';
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -8,11 +8,9 @@ export default defineConfig({
   testDir: './tests',
   timeout: 40 * 1000,  // for components
   expect: {
-    timeout: 40 * 1000, // for assertions
+    timeout: 5000, // for assertions
 
   },
-
-
 
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -26,8 +24,7 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    browserName: "chromium",
-
+    browserName: "chromium", // webkit
     launchOptions: {
       args: ['--disable-dev-shm-usage'],
       headless: false, // headless mode is off
