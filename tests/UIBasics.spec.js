@@ -31,10 +31,10 @@ test("Find locator and start ui automation on negative login scenario", async ({
     // await page.pause();
 });
 
-test("Select nth index in multiple elements", async ({page}) =>{
+test("Select nth index in multiple elements", async ({ page }) => {
     const txtUsername = page.locator("#username");
     const btnSignIn = page.locator('#signInBtn');
-    await  page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
     await expect(page).toHaveTitle("LoginPage Practise | Rahul Shetty Academy");
     await txtUsername.fill("username ");
     await page.locator("#password").fill("learning");
@@ -46,4 +46,33 @@ test("Select nth index in multiple elements", async ({page}) =>{
 
 
     //await page.pause();
+});
+
+test("Grab titles of products in one time", async ({ page }) => {
+
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    await expect(page).toHaveTitle("LoginPage Practise | Rahul Shetty Academy");
+    await page.locator("#username").fill("rahulshettyacademy");
+    await page.locator("#password").fill("learning");
+    await page.locator("#signInBtn").click();
+    const productTitlesElements = page.locator("div.card-body a");
+    console.log(await productTitlesElements.nth(0).textContent());
+    const allTitles = await productTitlesElements.allTextContents(); // bu satıra bak
+    console.log(allTitles); // []
+    // await page.pause();
+
+});
+
+test.only("Login", async ({ page }) => {
+    await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
+    await expect(page).toHaveTitle("Let's Shop");
+    await page.locator("input#userEmail").fill("eyazilim@gmail.com");
+    await page.locator("input#userPassword").fill("Eyazilim2025");
+    await page.locator("#login").click();
+    // dynamic wait but sometimes it can be flaky
+    await page.waitForLoadState("networkidle"); 
+    const titleList = page.locator(".card-body b");
+    console.log(await titleList.allTextContents()); // [ 'ZARA COAT 3', 'ADIDAS ORIGINAL', 'iphone 13 pro' ]
+
+
 });
