@@ -63,16 +63,30 @@ test("Grab titles of products in one time", async ({ page }) => {
 
 });
 
-test.only("Login", async ({ page }) => {
+test("Login and waiting mechanisms", async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
     await expect(page).toHaveTitle("Let's Shop");
     await page.locator("input#userEmail").fill("eyazilim@gmail.com");
     await page.locator("input#userPassword").fill("Eyazilim2025");
     await page.locator("#login").click();
     // dynamic wait but sometimes it can be flaky
-    await page.waitForLoadState("networkidle"); 
+    // await page.waitForLoadState("networkidle"); // this is worked for me -------------- 1  wait
+    await page.locator(".card-body b").last().waitFor();  // alternative of networkidle -- 2  wait
     const titleList = page.locator(".card-body b");
     console.log(await titleList.allTextContents()); // [ 'ZARA COAT 3', 'ADIDAS ORIGINAL', 'iphone 13 pro' ]
+    await page.pause();
+});
 
+test.only("Handle Dropdown Test", async({page})=>{
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    const txtUsername = page.locator("input#username");
+    const txtPassword = page.locator("input#password");
+    const btnSignIn = page.locator("input#signInBtn");
+    const ddRole = page.locator("select.form-control");
+    await ddRole.selectOption("consult");
+    await page.locator("input#usertype").last().click();
+    await page.locator("button#okayBtn").click();
+
+    await page.pause();
 
 });
