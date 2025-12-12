@@ -77,16 +77,26 @@ test("Login and waiting mechanisms", async ({ page }) => {
     await page.pause();
 });
 
-test.only("Handle Dropdown Test", async({page})=>{
+test.only("Handle Dropdown Test", async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
     const txtUsername = page.locator("input#username");
     const txtPassword = page.locator("input#password");
     const btnSignIn = page.locator("input#signInBtn");
     const ddRole = page.locator("select.form-control");
     await ddRole.selectOption("consult");
-    await page.locator("input#usertype").last().click();
+    const radioUser = page.locator("input#usertype").last();
+    await radioUser.click();
     await page.locator("button#okayBtn").click();
+    await expect(radioUser).toBeChecked(); // assertion for radioBtn checked
+    console.log(await radioUser.isChecked());
+    const chckTerms = page.locator("input#terms");
+    await chckTerms.click();
+    await expect(chckTerms).toBeChecked();
+    await chckTerms.uncheck();              // uncheck() method
+    // toBeFalsy() is not an async action. but isChecked is async action
+    expect(await chckTerms.isChecked()).toBeFalsy(); // assertion tobeFalse
+    await expect(chckTerms).not.toBeChecked(); // falsy alternative - 
 
-    await page.pause();
+    // await page.pause();
 
 });
