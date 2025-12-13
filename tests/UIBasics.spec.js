@@ -77,7 +77,7 @@ test("Login and waiting mechanisms", async ({ page }) => {
     await page.pause();
 });
 
-test.only("Handle Dropdown Test", async ({ page }) => {
+test("Handle Dropdown Test", async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
     const txtUsername = page.locator("input#username");
     const txtPassword = page.locator("input#password");
@@ -96,7 +96,15 @@ test.only("Handle Dropdown Test", async ({ page }) => {
     // toBeFalsy() is not an async action. but isChecked is async action
     expect(await chckTerms.isChecked()).toBeFalsy(); // assertion tobeFalse
     await expect(chckTerms).not.toBeChecked(); // falsy alternative - 
-
     // await page.pause();
 
+});
+
+// https://playwright.dev/docs/test-assertions#non-retrying-assertions
+test.only("Understanding Assertions", async({page})=>{
+    const blinkText = page.locator("a[href*='document']");
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    await expect(page).toHaveTitle("LoginPage Practise | Rahul Shetty Academy");
+    await expect(blinkText).toHaveAttribute("class","blinkingText");
+    await page.pause();
 });
