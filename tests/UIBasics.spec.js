@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { text } from 'stream/consumers';
 
 test("First testcase with fresh browser and context declaration", async ({ browser }) => {
     const context = await browser.newContext();
@@ -101,10 +102,37 @@ test("Handle Dropdown Test", async ({ page }) => {
 });
 
 // https://playwright.dev/docs/test-assertions#non-retrying-assertions
-test.only("Understanding Assertions", async({page})=>{
+test("Understanding Assertions", async ({ page }) => {
     const blinkText = page.locator("a[href*='document']");
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
     await expect(page).toHaveTitle("LoginPage Practise | Rahul Shetty Academy");
-    await expect(blinkText).toHaveAttribute("class","blinkingText");
+    await expect(blinkText).toHaveAttribute("class", "blinkingText");
     await page.pause();
+});
+
+
+test.only("Handling child window and tab", async ({ browser }) => {
+    const context = await browser.newContext();
+    const mainPage = await context.newPage();
+    const documentLink = mainPage.locator("a[href*='document']");
+    await mainPage.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    const [childPage] = await Promise.all(
+        [
+            context.waitForEvent("page"),
+            documentLink.click(),
+        ]
+    );
+
+    const redText  = await childPage.locator("p.red").textContent();
+    console.log(redText); // Please email us at mentor@rahulshet...
+
+    const username = redText.split("@")[1].split(" ")[0];
+    console.log(username); // rahulshettyacademy.com
+
+    await mainPage.locator("input#username").fill(username);
+    console.log("textContent", await mainPage.locator("input#username").textContent()); // empty
+    console.log("inputValue", await mainPage.locator("input#username").inputValue()); // empty
+    console.log("getAttribute" , await mainPage.locator("input#username").getAttribute("value")); // null
+
+    //await mainPage.pause();
 });
