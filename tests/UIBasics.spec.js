@@ -111,11 +111,11 @@ test("Understanding Assertions", async ({ page }) => {
 });
 
 
-test.only("Handling child window and tab", async ({ browser }) => {
+test("Handling child window and tab", async ({ browser }) => {
     const context = await browser.newContext();
-    const mainPage = await context.newPage();
+    const mainPage = await context.newPage(); // browser invoke at this moment like driver.getDriver()
     const documentLink = mainPage.locator("a[href*='document']");
-    await mainPage.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    await mainPage.goto("https://rahulshettyacademy.com/loginpagePractise/"); // opening page
     const [childPage] = await Promise.all(
         [
             context.waitForEvent("page"),
@@ -123,7 +123,7 @@ test.only("Handling child window and tab", async ({ browser }) => {
         ]
     );
 
-    const redText  = await childPage.locator("p.red").textContent();
+    const redText = await childPage.locator("p.red").textContent();
     console.log(redText); // Please email us at mentor@rahulshet...
 
     const username = redText.split("@")[1].split(" ")[0];
@@ -131,8 +131,42 @@ test.only("Handling child window and tab", async ({ browser }) => {
 
     await mainPage.locator("input#username").fill(username);
     console.log("textContent", await mainPage.locator("input#username").textContent()); // empty
-    console.log("inputValue", await mainPage.locator("input#username").inputValue()); // empty
-    console.log("getAttribute" , await mainPage.locator("input#username").getAttribute("value")); // null
+    console.log("inputValue", await mainPage.locator("input#username").inputValue()); // rahulshettyacademy.com
+    console.log("getAttribute", await mainPage.locator("input#username").getAttribute("value")); // null
 
-    //await mainPage.pause();
+    // await mainPage.pause();
+});
+
+
+
+test.only('codegen app', async ({ page }) => {
+  await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+  await page.locator('span').nth(4).click();
+  await page.getByRole('button', { name: 'Okay' }).click();
+  await page.getByRole('combobox').selectOption('consult');
+  await page.getByRole('checkbox', { name: 'I Agree to the terms and' }).check();
+  await page.getByRole('textbox', { name: 'Username:' }).click();
+  await page.getByRole('textbox', { name: 'Username:' }).fill('rahulshettyacademy');
+  await page.getByRole('textbox', { name: 'Username:' }).press('Tab');
+  await page.getByRole('textbox', { name: 'Password:' }).fill('learning');
+  await page.getByRole('button', { name: 'Sign In' }).click();
+  await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+  const page1Promise = page.waitForEvent('popup');
+  await page.getByRole('link', { name: 'Free Access to InterviewQues/' }).click();
+  const page1 = await page1Promise;
+  await page1.getByRole('link', { name: 'Courses' }).click();
+  await page1.goto('https://rahulshettyacademy.com/documents-request');
+  await page1.getByRole('link', { name: 'Mentorship' }).click();
+  await page1.goto('https://rahulshettyacademy.com/documents-request');
+  await page1.getByRole('link', { name: 'Practice' }).click();
+  await page1.goto('https://rahulshettyacademy.com/documents-request');
+  await page1.getByRole('link', { name: 'NEW All Access plan' }).click();
+  const page2Promise = page1.waitForEvent('popup');
+  await page1.getByRole('button', { name: 'JOIN NOW' }).first().click();
+  const page2 = await page2Promise;
+  await page2.getByRole('link', { name: 'Learning Path' }).click();
+  await page2.getByRole('button', { name: 'Close' }).click();
+  await page2.getByText('⚡').click();
+  await page2.getByRole('heading', { name: '[JAVASCRIPT] Become Full' }).click();
+  await page2.getByRole('button', { name: '+1 more courses' }).click();
 });
