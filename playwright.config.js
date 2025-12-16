@@ -6,7 +6,7 @@ import { chromium, defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
-  timeout: 40 * 1000,  // for components
+  timeout: 30 * 1000,  // for components
   expect: {
     timeout: 5000, // for assertions
 
@@ -23,15 +23,18 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  use: {
-    browserName: "chromium", // webkit
-    launchOptions: {
-      args: ['--disable-dev-shm-usage'],
-      headless: false, // headless mode is off
-      slowMo: 0,
-    },
+use: {
+    browserName: 'chromium',
+    headless: false,
+    slowMo: 0,
+    screenshot:'on', // only-on-failure, on-first-failure
+    trace:'on', // retry-with-trace, on-first-retry, on-all-retries
 
+    launchOptions: {
+    args: ['--disable-dev-shm-usage'],
+    },
   },
+  
 
 
 });
