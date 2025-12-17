@@ -28,7 +28,7 @@ use: {
     headless: false,
     slowMo: 0,
     screenshot:'on', // only-on-failure, on-first-failure
-    trace:'on', // retry-with-trace, on-first-retry, on-all-retries
+    trace:'retain-on-failure', // retry-with-trace, on-first-retry, on-all-retries, on
 
     launchOptions: {
     args: ['--disable-dev-shm-usage'],

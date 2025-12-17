@@ -139,7 +139,7 @@ test("Handling child window and tab", async ({ browser }) => {
 
 
 
-test.only('codegen app', async ({ page }) => {
+test('codegen app', async ({ page }) => {
   await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
   await page.locator('span').nth(4).click();
   await page.getByRole('button', { name: 'Okay' }).click();
