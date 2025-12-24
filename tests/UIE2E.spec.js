@@ -24,10 +24,15 @@ test.only("e-commerce automation", async ({ page }) => {
     if (title.includes("iphone")) {
       console.log("title : ", title);
       console.log("Found : ", i, " index");
-      await products.nth(i).locator("text= Add To Cart").click();
+      await products.nth(i).locator("text= Add To Cart").click(); 
+      // alternative 1 : await products.nth(i).locator(':has-text("Add To Cart")').click();
+      // alternative 2: await products.nth(i).locator('button', { hasText: 'Add To Cart' }).click();
+
       break;
     }
   }
+
+  await page.locator("button[routerlink*='cart']").click();
 
 
   await page.pause();
