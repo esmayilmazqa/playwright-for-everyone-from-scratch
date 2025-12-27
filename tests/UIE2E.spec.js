@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 
 test.only("e-commerce automation", async ({ page }) => {
 
+  const productName = "iphone 13 pro";
   const products = page.locator("div.card-body"); // this is array
   const txtUsername = page.locator("input#userEmail");
   const txtPassword = page.locator("input#userPassword");
@@ -24,7 +25,7 @@ test.only("e-commerce automation", async ({ page }) => {
     if (title.includes("iphone")) {
       console.log("title : ", title);
       console.log("Found : ", i, " index");
-      await products.nth(i).locator("text= Add To Cart").click(); 
+      await products.nth(i).locator("text= Add To Cart").click();
       // alternative 1 : await products.nth(i).locator(':has-text("Add To Cart")').click();
       // alternative 2: await products.nth(i).locator('button', { hasText: 'Add To Cart' }).click();
 
@@ -33,6 +34,11 @@ test.only("e-commerce automation", async ({ page }) => {
   }
 
   await page.locator("button[routerlink*='cart']").click();
+  await page.locator("div.cart li").waitFor();
+  const isPresent = await page.locator(`h3:has-text("${productName}")`).isVisible();
+  // await expect(page.locator(`h3:has-text("${productName}")`)).toBeVisible();
+  expect(isPresent).toBeTruthy();
+  
 
 
   await page.pause();
