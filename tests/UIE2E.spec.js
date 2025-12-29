@@ -8,9 +8,11 @@ test.only("e-commerce automation", async ({ page }) => {
   const txtUsername = page.locator("input#userEmail");
   const txtPassword = page.locator("input#userPassword");
   const lblFilters = page.locator("h4").nth(1);
+  const email = 'academy123+@gmail.com';
+
   await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
 
-  await txtUsername.fill("academy123+@gmail.com"); // email
+  await txtUsername.fill(email); // email
   await txtPassword.fill("Academy123+"); // password
   await page.locator("input#login").click();
   await page.waitForLoadState("networkidle"); // not enought, put some control mechanism
@@ -60,8 +62,16 @@ test.only("e-commerce automation", async ({ page }) => {
   }
 
 
+  await expect(page.locator("div.user__name label[type='text']")).toHaveText(email);
+  await page.locator("a.action__submit").click();
+  await expect(page.locator("h1.hero-primary")).toHaveText(" Thankyou for the order. ");
+  
+  const orderId = await page.locator("td.em-spacer-1 label.ng-star-inserted").textContent();
+  console.log(orderId);
 
 
-  await page.pause();
+
+
+  // await page.pause();
 
 });
