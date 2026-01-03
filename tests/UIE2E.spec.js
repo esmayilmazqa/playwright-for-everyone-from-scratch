@@ -15,11 +15,11 @@ test.only("e-commerce automation", async ({ page }) => {
   await txtUsername.fill(email); // email
   await txtPassword.fill("Academy123+"); // password
   await page.locator("input#login").click();
-  await page.waitForLoadState("networkidle"); // not enought, put some control mechanism
-  await expect(lblFilters).toHaveText("Filters");
+  // await page.waitForLoadState("networkidle"); // not enought, put some control mechanism (crashed)
+  await expect(lblFilters).toHaveText("Filters"); // auto-wait working
   console.log("text : ", await lblFilters.textContent());
 
-  const count = await products.count(); // array lentgh
+  let count = await products.count(); // array lentgh
   for (let i = 0; i < count; i++) {
 
     const title = await products.nth(i).locator("b").textContent(); // chaining locator
@@ -55,20 +55,39 @@ test.only("e-commerce automation", async ({ page }) => {
   for (let i = 0; i < optionCount; i++) {
     const text = await cbbCountryPanel.locator("button").nth(i).textContent();
     // console.log(text);
-    if(text && text.trim() === "India") // solved text error with null control
+    if (text && text.trim() === "India") // solved text error with null control
     {
       cbbCountryPanel.locator("button").nth(i).click();
     }
   }
 
-
   await expect(page.locator("div.user__name label[type='text']")).toHaveText(email);
   await page.locator("a.action__submit").click();
   await expect(page.locator("h1.hero-primary")).toHaveText(" Thankyou for the order. ");
-  
+
   const orderId = await page.locator("td.em-spacer-1 label.ng-star-inserted").textContent();
   console.log(orderId);
 
+  await page.locator("button[routerLink*='orders']").click();
+
+  const rows = page.locator("tbody tr"); 
+  await rows.nth(0).waitFor();
+  count = await rows.count();
+
+  for (let i = 0; i < count; i++) {
+    const rowOrderId = await rows.nth(i).locator("th").textContent();
+    if (orderId.includes(rowOrderId)) {
+      await rows.nth(i).locator("button").first().click();
+      break;
+    }
+
+  }
+
+  const lblOrder = page.locator("div.col-text.-main");
+  console.log("orderId ", orderId); //  | 695963e0c941646b7a7b4fca |
+  // await lblOrder.waitFor(); 
+  console.log("lblOrderText : ", lblOrder.textContent());
+  expect(lblOrder).toContainText(orderId?.replaceAll("|", "").replaceAll(" ", ""));
 
 
 

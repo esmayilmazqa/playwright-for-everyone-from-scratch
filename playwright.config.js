@@ -23,18 +23,19 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-use: {
+  use: {
     browserName: 'chromium',
     headless: false,
     slowMo: 0,
-    screenshot:'on', // only-on-failure, on-first-failure
-    trace:'retain-on-failure', // retry-with-trace, on-first-retry, on-all-retries, on
+    screenshot: 'only-on-failure', // only-on-failure, on-first-failure, on
+    trace: 'retain-on-failure', // retry-with-trace, on-first-retry, on-all-retries, on
+    video: 'retain-on-failure',
+
 
     launchOptions: {
-    args: ['--disable-dev-shm-usage'],
+      args: ['--disable-dev-shm-usage'],
     },
   },
-  
 
 
 });
