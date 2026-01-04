@@ -83,14 +83,14 @@ test.only("e-commerce automation", async ({ page }) => {
 
   }
 
-  const lblOrder = page.locator("div.col-text.-main");
+  const lblOrder =  page.locator("div.col-text.-main");
   console.log("orderId ", orderId); //  | 695963e0c941646b7a7b4fca |
   // await lblOrder.waitFor(); 
-  console.log("lblOrderText : ", lblOrder.textContent());
-  expect(lblOrder).toContainText(orderId?.replaceAll("|", "").replaceAll(" ", ""));
+  console.log("lblOrderText : ", await lblOrder.textContent());
+  expect(lblOrder).toHaveText(orderId?.replaceAll("|", "").replaceAll(" ", ""));
 
 
 
-  // await page.pause();
+  await page.pause();
 
 });
