@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-import { text } from 'stream/consumers';
 
 test("First testcase with fresh browser and context declaration", async ({ browser }) => {
     const context = await browser.newContext();
@@ -137,6 +136,17 @@ test("Handling child window and tab", async ({ browser }) => {
     // await mainPage.pause();
 });
 
+
+// get Locators from coming Locator API on Playwright
+test("Get Locators from Locator API", async({page}) =>{
+    await page.goto("https://rahulshettyacademy.com/angularpractice/");
+    await page.getByLabel("Check me out if you Love IceCreams!").click(); // or check
+    await page.getByLabel("Employed").check(); // or click()
+    await page.getByLabel("Gender").selectOption("Female"); // for select tags
+
+    // await page.pause();
+
+} );
 
 
 test('codegen app', async ({ page }) => {

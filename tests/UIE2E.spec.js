@@ -1,7 +1,7 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 
-test.only("e-commerce automation", async ({ page }) => {
+test("e-commerce automation", async ({ page }) => {
 
   const productName = "iphone 13 pro";
   const products = page.locator("div.card-body"); // this is array
