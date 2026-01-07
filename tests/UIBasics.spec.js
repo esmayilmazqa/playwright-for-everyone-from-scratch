@@ -138,11 +138,22 @@ test("Handling child window and tab", async ({ browser }) => {
 
 
 // get Locators from coming Locator API on Playwright
-test("Get Locators from Locator API", async({page}) =>{
+test.only("Get Locators from Locator API", async({page}) =>{
     await page.goto("https://rahulshettyacademy.com/angularpractice/");
     await page.getByLabel("Check me out if you Love IceCreams!").click(); // or check
     await page.getByLabel("Employed").check(); // or click()
     await page.getByLabel("Gender").selectOption("Female"); // for select tags
+
+    await page.getByPlaceholder("Password").fill("Abc123+");
+
+    await page.getByRole("button", {name:'Submit'}).click();
+
+    const successMessage = await page.getByText("Success! The Form has been submitted successfully!.").textContent();
+    console.log(successMessage);
+
+    await page.getByRole("link", {name:'Shop'}).click();
+
+    await page.locator("app-card").filter({hasText: 'Nokia Edge'}).getByRole("button").click();
 
     // await page.pause();
 
