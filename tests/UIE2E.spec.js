@@ -147,7 +147,7 @@ test.only("E-Commerce App by using PW Special Locators", async ({ page }) => {
 
 
   const lblOrder = page.locator("div.col-text.-main");
-  console.log("orderId ", orderId); //  | 695963e0c941646b7a7b4fca |
+  console.log("orderId ", orderId);
   // await lblOrder.waitFor(); 
   console.log("lblOrderText : ", await lblOrder.textContent());
   expect(lblOrder).toHaveText(orderId);
@@ -158,5 +158,3 @@ test.only("E-Commerce App by using PW Special Locators", async ({ page }) => {
   
   
 });
-
-// 0532 7493446 -> Fatih muhasebeci (Şevket in durduğu dükkan)
