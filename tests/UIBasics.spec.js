@@ -138,7 +138,7 @@ test("Handling child window and tab", async ({ browser }) => {
 
 
 // get Locators from coming Locator API on Playwright
-test.only("Get Locators from Locator API", async({page}) =>{
+test("Get Locators from Locator API", async({page}) =>{
     await page.goto("https://rahulshettyacademy.com/angularpractice/");
     await page.getByLabel("Check me out if you Love IceCreams!").click(); // or check
     await page.getByLabel("Employed").check(); // or click()
