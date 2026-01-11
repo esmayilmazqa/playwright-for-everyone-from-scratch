@@ -138,7 +138,7 @@ test("Handling child window and tab", async ({ browser }) => {
 
 
 // get Locators from coming Locator API on Playwright
-test("Get Locators from Locator API", async({page}) =>{
+test("Get Locators from Locator API", async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/angularpractice/");
     await page.getByLabel("Check me out if you Love IceCreams!").click(); // or check
     await page.getByLabel("Employed").check(); // or click()
@@ -146,48 +146,73 @@ test("Get Locators from Locator API", async({page}) =>{
 
     await page.getByPlaceholder("Password").fill("Abc123+");
 
-    await page.getByRole("button", {name:'Submit'}).click();
+    await page.getByRole("button", { name: 'Submit' }).click();
 
     const successMessage = await page.getByText("Success! The Form has been submitted successfully!.").textContent();
     console.log(successMessage);
 
-    await page.getByRole("link", {name:'Shop'}).click();
+    await page.getByRole("link", { name: 'Shop' }).click();
 
-    await page.locator("app-card").filter({hasText: 'Nokia Edge'}).getByRole("button").click();
+    await page.locator("app-card").filter({ hasText: 'Nokia Edge' }).getByRole("button").click();
 
     // await page.pause();
 
-} );
+});
+
+test.only("Handle calendar element", async ({ page }) => {
+    const month = "6";
+    const date = "15";
+    const year = "2027";
+    const expectedList = [month, date, year];
+
+    await page.goto("https://rahulshettyacademy.com/seleniumPractise/#/offers");
+    await page.locator("div.react-date-picker__inputGroup").click();
+    await page.locator("span.react-calendar__navigation__label__labelText").click();
+    await page.locator("span.react-calendar__navigation__label__labelText").click();
+    await page.getByText(year).click();                                                 // year
+    await page.locator("button.react-calendar__tile").nth(Number(month) - 1).click();     // month
+    await page.locator(`//abbr[text()='${date}']`).click();
+
+    const inputs = page.locator("div.react-date-picker__inputGroup input");
+
+    for (let i = 1; i < await inputs.count(); i++) {
+        const value = await inputs.nth(i).inputValue();
+        await expect(value).toEqual(expectedList[i-1]);
+    }
+
+    await page.pause();
+
+});
 
 
 test('codegen app', async ({ page }) => {
-  await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
-  await page.locator('span').nth(4).click();
-  await page.getByRole('button', { name: 'Okay' }).click();
-  await page.getByRole('combobox').selectOption('consult');
-  await page.getByRole('checkbox', { name: 'I Agree to the terms and' }).check();
-  await page.getByRole('textbox', { name: 'Username:' }).click();
-  await page.getByRole('textbox', { name: 'Username:' }).fill('rahulshettyacademy');
-  await page.getByRole('textbox', { name: 'Username:' }).press('Tab');
-  await page.getByRole('textbox', { name: 'Password:' }).fill('learning');
-  await page.getByRole('button', { name: 'Sign In' }).click();
-  await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
-  const page1Promise = page.waitForEvent('popup');
-  await page.getByRole('link', { name: 'Free Access to InterviewQues/' }).click();
-  const page1 = await page1Promise;
-  await page1.getByRole('link', { name: 'Courses' }).click();
-  await page1.goto('https://rahulshettyacademy.com/documents-request');
-  await page1.getByRole('link', { name: 'Mentorship' }).click();
-  await page1.goto('https://rahulshettyacademy.com/documents-request');
-  await page1.getByRole('link', { name: 'Practice' }).click();
-  await page1.goto('https://rahulshettyacademy.com/documents-request');
-  await page1.getByRole('link', { name: 'NEW All Access plan' }).click();
-  const page2Promise = page1.waitForEvent('popup');
-  await page1.getByRole('button', { name: 'JOIN NOW' }).first().click();
-  const page2 = await page2Promise;
-  await page2.getByRole('link', { name: 'Learning Path' }).click();
-  await page2.getByRole('button', { name: 'Close' }).click();
-  await page2.getByText('⚡').click();
-  await page2.getByRole('heading', { name: '[JAVASCRIPT] Become Full' }).click();
-  await page2.getByRole('button', { name: '+1 more courses' }).click();
+    await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+    await page.locator('span').nth(4).click();
+    await page.getByRole('button', { name: 'Okay' }).click();
+    await page.getByRole('combobox').selectOption('consult');
+    await page.getByRole('checkbox', { name: 'I Agree to the terms and' }).check();
+    await page.getByRole('textbox', { name: 'Username:' }).click();
+    await page.getByRole('textbox', { name: 'Username:' }).fill('rahulshettyacademy');
+    await page.getByRole('textbox', { name: 'Username:' }).press('Tab');
+    await page.getByRole('textbox', { name: 'Password:' }).fill('learning');
+    await page.getByRole('button', { name: 'Sign In' }).click();
+    await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+    const page1Promise = page.waitForEvent('popup');
+    await page.getByRole('link', { name: 'Free Access to InterviewQues/' }).click();
+    const page1 = await page1Promise;
+    await page1.getByRole('link', { name: 'Courses' }).click();
+    await page1.goto('https://rahulshettyacademy.com/documents-request');
+    await page1.getByRole('link', { name: 'Mentorship' }).click();
+    await page1.goto('https://rahulshettyacademy.com/documents-request');
+    await page1.getByRole('link', { name: 'Practice' }).click();
+    await page1.goto('https://rahulshettyacademy.com/documents-request');
+    await page1.getByRole('link', { name: 'NEW All Access plan' }).click();
+    const page2Promise = page1.waitForEvent('popup');
+    await page1.getByRole('button', { name: 'JOIN NOW' }).first().click();
+    const page2 = await page2Promise;
+    await page2.getByRole('link', { name: 'Learning Path' }).click();
+    await page2.getByRole('button', { name: 'Close' }).click();
+    await page2.getByText('⚡').click();
+    await page2.getByRole('heading', { name: '[JAVASCRIPT] Become Full' }).click();
+    await page2.getByRole('button', { name: '+1 more courses' }).click();
 });

@@ -1,7 +1,7 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 
-test("e-commerce automation", async ({ page }) => {
+test("E-commerce automation with traditional locators - locator API -", async ({ page }) => {
 
   const productName = "iphone 13 pro";
   const products = page.locator("div.card-body"); // this is array
@@ -95,7 +95,7 @@ test("e-commerce automation", async ({ page }) => {
 
 });
 
-test.only("E-Commerce App by using PW Special Locators", async ({ page }) => {
+test("E-Commerce App by using PW Special Locators", async ({ page }) => {
   const productName = "iphone 13 pro";
   const products = page.locator("div.card-body"); // this is array
   const txtUsername = page.locator("input#userEmail");
