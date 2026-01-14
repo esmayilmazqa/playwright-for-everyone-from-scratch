@@ -1,5 +1,15 @@
 import { test, expect } from '@playwright/test';
 
+test("Navigation methods on pw", async({page})=>{
+    await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
+    await page.goto("https://google.com");
+    await page.goBack(); // to rahul website
+    await page.goForward(); // to google website
+
+    await page.pause();
+
+});
+
 test("First testcase with fresh browser and context declaration", async ({ browser }) => {
     const context = await browser.newContext();
     const page = await context.newPage();
@@ -159,7 +169,7 @@ test("Get Locators from Locator API", async ({ page }) => {
 
 });
 
-test.only("Handle calendar element", async ({ page }) => {
+test("Handle calendar element", async ({ page }) => {
     const month = "6";
     const date = "15";
     const year = "2027";
