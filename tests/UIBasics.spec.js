@@ -10,6 +10,18 @@ test("Navigation methods on pw", async({page})=>{
 
 });
 
+test.only("Validation of textbox visibility", async({page})=>{
+    await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
+    const textbox = await page.locator("#displayed-text");
+    await expect(textbox).toBeVisible();
+    await page.locator("#hide-textbox").click();
+    await expect(textbox).not.toBeVisible(); // or toBeHidden();
+
+
+    await page.pause();
+
+});
+
 test("First testcase with fresh browser and context declaration", async ({ browser }) => {
     const context = await browser.newContext();
     const page = await context.newPage();
