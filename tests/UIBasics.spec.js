@@ -32,6 +32,15 @@ test("Handling js popup/dialog", async ({ page }) => {
 
 });
 
+test.only("Handling mouse hover", async ({ page }) => {
+    await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
+    await page.locator("button#mousehover").hover();
+    await page.locator("div.mouse-hover-content").getByText("Top").click();
+
+});
+
+
+
 test("First testcase with fresh browser and context declaration", async ({ browser }) => {
     const context = await browser.newContext();
     const page = await context.newPage();
