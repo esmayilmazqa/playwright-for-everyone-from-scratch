@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test("Navigation methods on pw", async({page})=>{
+test("Navigation methods on pw", async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
     await page.goto("https://google.com");
     await page.goBack(); // to rahul website
@@ -10,7 +10,7 @@ test("Navigation methods on pw", async({page})=>{
 
 });
 
-test.only("Validation of textbox visibility", async({page})=>{
+test("Validation of textbox visibility", async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
     const textbox = await page.locator("#displayed-text");
     await expect(textbox).toBeVisible();
@@ -19,6 +19,16 @@ test.only("Validation of textbox visibility", async({page})=>{
 
 
     await page.pause();
+
+});
+
+
+test("Handling js popup/dialog", async ({ page }) => {
+
+    await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
+    await page.pause();
+    page.on("dialog", dialog => dialog.accept()); // first argument "event", second argument "listener"
+    await page.locator("input#confirmbtn").click();
 
 });
 
@@ -199,7 +209,7 @@ test("Handle calendar element", async ({ page }) => {
 
     for (let i = 1; i < await inputs.count(); i++) {
         const value = await inputs.nth(i).inputValue();
-        await expect(value).toEqual(expectedList[i-1]);
+        await expect(value).toEqual(expectedList[i - 1]);
     }
 
     await page.pause();
