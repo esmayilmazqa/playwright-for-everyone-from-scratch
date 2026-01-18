@@ -32,10 +32,20 @@ test("Handling js popup/dialog", async ({ page }) => {
 
 });
 
-test.only("Handling mouse hover", async ({ page }) => {
+test("Handling mouse hover", async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
     await page.locator("button#mousehover").hover();
     await page.locator("div.mouse-hover-content").getByText("Top").click();
+
+});
+
+test("Handling iframes", async({page})=>
+{
+    await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
+    const iframePage = page.frameLocator("#courses-iframe");
+    await iframePage.locator("li>a[href*='lifetime-access']:visible").click(); // there are two elements but one is invisible / hidden.
+    const controlText = iframePage.locator("div.content-side h2 span");    
+    console.log(await controlText.textContent()); // auto-waiting not need // await controlText.waitFor(); !!!
 
 });
 
