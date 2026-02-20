@@ -60,7 +60,7 @@ test("Login screen is by passed, set token on localStorage", async ({ page }) =>
 
 
 test("Send a request and parse the response", async (page) => {
-
+    // look beforeAll() method. login and createOrder API
 });
 
 test.only("E2E scenario", async ({ page }) => {
@@ -94,6 +94,4 @@ test.only("E2E scenario", async ({ page }) => {
     console.log("lblOrderText : ", await lblOrder.textContent());     
     expect(lblOrder).toHaveText(orderId?.replaceAll("|", "").replaceAll(" ", ""));   
     // await page.pause();
-
-
 });
