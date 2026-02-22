@@ -23,7 +23,7 @@ test.beforeAll(async () => {
     // Login with API and generated token from response
     const apiContext = await request.newContext();
     const apiUtils = new APIUtils(apiContext, loginPayload);
-    orderIdAndToken = apiUtils.createOrder(orderPayload);
+    orderIdAndToken = await apiUtils.createOrder(orderPayload);
 
 });
 
@@ -50,7 +50,7 @@ test.only("E2E scenario", async ({ page }) => {
 
     for (let i = 0; i < count; i++) {
         const rowOrderId = await rows.nth(i).locator("th").textContent();
-        if (orderId.includes(rowOrderId)) {
+        if (orderIdAndToken.orderId.includes(rowOrderId)) {
             await rows.nth(i).locator("button").first().click();
             break;
         }
@@ -58,9 +58,9 @@ test.only("E2E scenario", async ({ page }) => {
     }
 
     const lblOrder = page.locator("div.col-text.-main");
-    console.log("orderId ", orderId); //  | 695963e0c941646b7a7b4fca |
+    console.log("orderId ", orderIdAndToken.orderId); //  | 695963e0c941646b7a7b4fca |
     // await lblOrder.waitFor(); 
     console.log("lblOrderText : ", await lblOrder.textContent());
-    expect(lblOrder).toHaveText(orderId?.replaceAll("|", "").replaceAll(" ", ""));
+    expect(lblOrder).toHaveText(orderIdAndToken.orderId?.replaceAll("|", "").replaceAll(" ", ""));
     // await page.pause();
 });
