@@ -27,11 +27,7 @@ test.beforeAll(async () => {
 
 });
 
-test.beforeEach(async () => {
-
-});
-
-test.only("E2E scenario", async ({ page }) => {
+test("E2E scenario", async ({ page }) => {
 
 
     // token from login API and be set on localStorage
