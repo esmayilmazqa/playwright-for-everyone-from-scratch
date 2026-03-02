@@ -31,8 +31,7 @@ test.beforeAll(async () => {
 
 });
 
-test.only("E2E scenario - Mock API", async ({ page }) => {
-
+test.only("E2E scenario - Mock API by using fake Response", async ({ page }) => {
 
     // token from login API and be set on localStorage
     page.addInitScript(value => {
@@ -42,7 +41,8 @@ test.only("E2E scenario - Mock API", async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/client/");
     // all steps are gone
 
-    await page.route("https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/6943157d32ed8658713b0559",
+    // const requestUrl = "https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*";
+    await page.route("https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*",
         async route => {
             const response = await page.request.fetch(route.request());
             let body = JSON.stringify(fakeOrderPayload);
@@ -56,9 +56,9 @@ test.only("E2E scenario - Mock API", async ({ page }) => {
         }
     );
 
-
     await page.locator("button[routerLink*='orders']").click();
-    await page.pause();
-
+    await page.waitForResponse("https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*");
+    console.log(await page.locator(".mt-4").textContent());
+    
 
 });
