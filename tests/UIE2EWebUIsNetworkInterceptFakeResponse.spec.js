@@ -31,7 +31,7 @@ test.beforeAll(async () => {
 
 });
 
-test.only("E2E scenario - Mock API by using fake Response", async ({ page }) => {
+test("E2E scenario - Mock API by using fake Response", async ({ page }) => {
 
     // token from login API and be set on localStorage
     page.addInitScript(value => {
