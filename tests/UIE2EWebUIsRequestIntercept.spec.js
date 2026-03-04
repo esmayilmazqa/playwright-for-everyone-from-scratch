@@ -1,6 +1,6 @@
 import { test, expect, page } from "@playwright/test";
 
-test("@HACK Network Request Intercept for Security Test", async ({ page }) => {
+test("@HACK Network Request Intercept for Security Test", async ({ page }) => { // npx playwright test --grep HACK
 
 
     const productName = "iphone 13 pro";
@@ -17,12 +17,13 @@ test("@HACK Network Request Intercept for Security Test", async ({ page }) => {
     await page.locator("input#login").click();
     await expect(lblFilters).toHaveText("Filters"); // auto-wait working
     console.log("text : ", await lblFilters.textContent());
-    
+
     await page.locator("button[routerLink*='orders']").click();
 
     await page.route("https://rahulshettyacademy.com/api/ecom/order/get-orders-details?id=*",
         route => route.continue({ url: "https://rahulshettyacademy.com/api/ecom/order/get-orders-details?id=64ce67ea7244490f9597bff6" })
     );
     await page.locator("button:has-text('View')").first().click();
-    await page.pause();
+    await expect(page.locator("p.blink_me")).toHaveText("You are not authorize to view this order");
+    // await page.pause();
 });
