@@ -63,7 +63,7 @@ test("Send a request and parse the response", async (page) => {
     // look beforeAll() method. login and createOrder API
 });
 
-test.only("E2E scenario", async ({ page }) => {
+test("E2E scenario", async ({ page }) => {
 
     // token from login API and be set on localStorage
     page.addInitScript(value => {
