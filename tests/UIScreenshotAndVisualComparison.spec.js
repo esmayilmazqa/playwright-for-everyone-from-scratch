@@ -1,6 +1,6 @@
 import { test, page, expect } from "@playwright/test";
 
-test.only("Screenshot", async({page})=>{
+test("Taking full and Partial Screenshot", async({page})=>{
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
     const textbox = await page.locator("#displayed-text");
     await expect(textbox).toBeVisible(); 
@@ -9,4 +9,10 @@ test.only("Screenshot", async({page})=>{
     await page.locator("#hide-textbox").click();
     await page.screenshot({path: "screenshot.jpg"}); // screeshot for wholepage
     await expect(textbox).not.toBeVisible(); // or toBeHidden();
+});
+
+test.only("Visual Comparison Test", async({page})=>{
+    await page.goto("https://www.rediff.com/");
+    expect(await page.screenshot()).toMatchSnapshot("actualImage.png");
+
 });
