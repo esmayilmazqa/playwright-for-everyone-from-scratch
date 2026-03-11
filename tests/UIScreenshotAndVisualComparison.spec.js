@@ -11,7 +11,7 @@ test("Taking full and Partial Screenshot", async({page})=>{
     await expect(textbox).not.toBeVisible(); // or toBeHidden();
 });
 
-test.only("Visual Comparison Test", async({page})=>{
+test("Visual Comparison Test", async({page})=>{
     await page.goto("https://www.rediff.com/");
     expect(await page.screenshot()).toMatchSnapshot("actualImage.png");
 
