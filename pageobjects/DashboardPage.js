@@ -1,8 +1,12 @@
+import { CartPage } from "./CartPage";
+
 export class DashboardPage {
     constructor(page) {
         this.page = page;
+        this.cartPage = new CartPage(this.page);
         this.products = page.locator("div.card-body"); // this is array
         this.cartMenu = page.locator("button[routerlink*='cart']");
+
 
     }
 
@@ -27,5 +31,7 @@ export class DashboardPage {
 
     async clickCartMenu() {
         await this.cartMenu.click();
+        await this.cartPage.productCardInCart.waitFor();
+
     }
 }

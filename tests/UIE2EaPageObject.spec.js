@@ -1,7 +1,5 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { LoginPage } from "../pageobjects/LoginPage";
-import { DashboardPage } from "../pageobjects/DashboardPage";
 import { POManager } from '../pageobjects/POManager';
 
 test.only("E-commerce PO automation with traditional locators - locator API -", async ({ page }) => {
@@ -9,10 +7,10 @@ test.only("E-commerce PO automation with traditional locators - locator API -", 
   const productName = "iphone 13 pro";
   const username = 'academy123+@gmail.com';
   const password = "Academy123+";
- 
-  const pomManager = new POManager(page);
+
+  const pomManager = new POManager(page,productName);
   await pomManager.getLoginPage().landOnPage();
-  await pomManager.getLoginPage().validLogin(username,password);
+  await pomManager.getLoginPage().validLogin(username, password);
   // await page.waitForLoadState("networkidle"); // not enought, put some control mechanism (crashed)
   await expect(pomManager.getLoginPage().lblFilters).toHaveText("Filters"); // auto-wait working
   // console.log("text : ", await dashboardPage.lblFilters.textContent());
@@ -20,37 +18,23 @@ test.only("E-commerce PO automation with traditional locators - locator API -", 
   await pomManager.getDashboardPage().selectAndAddToCart(productName);
   await pomManager.getDashboardPage().clickCartMenu();
 
-  
-
-  // alternative  // await expect(page.locator(`h3:has-text("${productName}")`)).toBeVisible();
-  await page.locator("div.cart li").waitFor();
-  const isPresent = await page.locator(`h3:has-text("${productName}")`).isVisible();
-
-  expect(isPresent).toBeTruthy();
+  await expect(pomManager.getCartPage().productNameInCart.isVisible()).toBeTruthy();
 
   // check checkout elements
-  await page.locator("ul button[type='button']").click();
+  await pomManager.getCartPage().clickCheckoutBtn();
+  await pomManager.getCheckoutPage().pressSequentiallyCountry("ind");
+  await pomManager.getCheckoutPage().selectCountry("India");
 
-  await page.locator("input[placeholder*='Country']").pressSequentially("ind");
+  await expect(pomManager.getCheckoutPage().lblUsername).toHaveText(username);
 
-  const cbbCountryPanel = page.locator("section.ta-results");
-  await cbbCountryPanel.waitFor();
+  await pomManager.getCheckoutPage().clickPlaceOrderBtn();
 
-  const optionCount = await cbbCountryPanel.locator("button").count();
-  for (let i = 0; i < optionCount; i++) {
-    const text = await cbbCountryPanel.locator("button").nth(i).textContent();
-    // console.log(text);
-    if (text && text.trim() === "India") // solved text error with null control
-    {
-      cbbCountryPanel.locator("button").nth(i).click();
-    }
-  }
 
-  await expect(page.locator("div.user__name label[type='text']")).toHaveText(username);
-  await page.locator("a.action__submit").click();
-  await expect(page.locator("h1.hero-primary")).toHaveText(" Thankyou for the order. ");
+  // order details page
+  await expect(await pomManager.getOrderDetailsPage().msgThankYou).toHaveText(" Thankyou for the order. ");
 
-  const orderId = await page.locator("td.em-spacer-1 label.ng-star-inserted").textContent();
+  const orderId = await pomManager.getOrderDetailsPage().orderId.textContent();
+  // await page.locator("td.em-spacer-1 label.ng-star-inserted").textContent();
   console.log(orderId);
 
   await page.locator("button[routerLink*='orders']").click();
