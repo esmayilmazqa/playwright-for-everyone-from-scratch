@@ -6,8 +6,12 @@ export class DashboardPage {
         this.cartPage = new CartPage(this.page);
         this.products = page.locator("div.card-body"); // this is array
         this.cartMenu = page.locator("button[routerlink*='cart']");
+        this.ordersMenu = page.locator("button[routerLink*='orders']");
 
+    }
 
+    async clickOrdersMenu() {
+          await this.ordersMenu.click();
     }
 
     async selectAndAddToCart(productName) {

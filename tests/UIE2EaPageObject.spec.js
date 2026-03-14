@@ -37,27 +37,15 @@ test.only("E-commerce PO automation with traditional locators - locator API -", 
   // await page.locator("td.em-spacer-1 label.ng-star-inserted").textContent();
   console.log(orderId);
 
-  await page.locator("button[routerLink*='orders']").click();
 
-  const rows = page.locator("tbody tr");
-  await rows.nth(0).waitFor();
-  const count = await rows.count();
+  // OrdersPage 
+  await pomManager.getDashboardPage().clickOrdersMenu();
+  await pomManager.getOrdersPage().clickViewBtnForAddedOrder(orderId);
 
-  for (let i = 0; i < count; i++) {
-    const rowOrderId = await rows.nth(i).locator("th").textContent();
-    if (orderId.includes(rowOrderId)) {
-      await rows.nth(i).locator("button").first().click();
-      break;
-    }
 
-  }
-
-  const lblOrder = page.locator("div.col-text.-main");
-  console.log("orderId ", orderId); //  | 695963e0c941646b7a7b4fca |
-  // await lblOrder.waitFor(); 
-  console.log("lblOrderText : ", await lblOrder.textContent());
+  // Order Summary
+  const lblOrder = await pomManager.getOrderDetailsPage().getOrderId();
   expect(lblOrder).toHaveText(orderId?.replaceAll("|", "").replaceAll(" ", ""));
-
 
 
   await page.pause();
