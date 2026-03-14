@@ -1,11 +1,11 @@
-import { CartPage } from "./CartPage";
-import { CheckoutPage } from "./CheckoutPage";
-import { DashboardPage } from "./DashboardPage";
-import { LoginPage } from "./LoginPage";
-import { OrderDetailsPage } from "./OrderDetailsPage";
-import { OrdersPage } from "./OrdersPage";
+import { CartPage } from "./cart-page";
+import { CheckoutPage } from "./checkout-page";
+import { DashboardPage } from "./dashboard-page";
+import { LoginPage } from "./login-page";
+import { OrderDetailsPage } from "./order-details-page";
+import { OrdersPage } from "./orders-page";
 
-export class POManager{
+export class PageObjectManager{
     constructor(page, productName)
     {
         this.page = page;

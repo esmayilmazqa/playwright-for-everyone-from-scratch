@@ -1,4 +1,4 @@
-import { CartPage } from "./CartPage";
+import { CartPage } from "./cart-page";
 
 export class DashboardPage {
     constructor(page) {

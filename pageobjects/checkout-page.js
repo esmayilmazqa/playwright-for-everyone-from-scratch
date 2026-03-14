@@ -1,5 +1,3 @@
-import { expect, page } from "@playwright/test";
-
 export class CheckoutPage {
 
     constructor(page) {
@@ -21,7 +19,6 @@ export class CheckoutPage {
         const optionCount = await this.countries.count();
         for (let i = 0; i < optionCount; i++) {
             const text = await this.countries.nth(i).textContent();
-            console.log(text, "heeyyyyyyyyyy",country);
             if (text && text.trim() === country) // solved text error with null control
             {
                 this.countries.nth(i).click();

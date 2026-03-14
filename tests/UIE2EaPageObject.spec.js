@@ -1,6 +1,6 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { POManager } from '../pageobjects/POManager';
+import { PageObjectManager } from '../pageobjects/page-object-manager';
 
 test.only("E-commerce PO automation with traditional locators - locator API -", async ({ page }) => {
 
@@ -8,7 +8,7 @@ test.only("E-commerce PO automation with traditional locators - locator API -", 
   const username = 'academy123+@gmail.com';
   const password = "Academy123+";
 
-  const pomManager = new POManager(page,productName);
+  const pomManager = new PageObjectManager(page,productName);
   await pomManager.getLoginPage().landOnPage();
   await pomManager.getLoginPage().validLogin(username, password);
   // await page.waitForLoadState("networkidle"); // not enought, put some control mechanism (crashed)
