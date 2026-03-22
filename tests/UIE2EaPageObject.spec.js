@@ -2,7 +2,7 @@
 import { test, expect } from '@playwright/test';
 import { PageObjectManager } from '../pageobjects/page-object-manager';
 
-test.only("E-commerce PO automation with traditional locators - locator API -", async ({ page }) => {
+test("E-commerce PO automation with traditional locators - locator API -", async ({ page }) => {
 
   const productName = "iphone 13 pro";
   const username = 'academy123+@gmail.com';
