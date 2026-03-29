@@ -1,5 +1,5 @@
 import { test, expect, request } from "@playwright/test";
-import { APIUtils } from "./utils/APIUtils";
+import { APIUtils } from "../utils/APIUtils";
 /**
  * UIE2E.spec.js scenario with Login API Injection
  */

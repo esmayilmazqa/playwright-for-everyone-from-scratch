@@ -1,22 +1,25 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 import { PageObjectManager } from '../page-objects/page-object-manager';
+import dataset from "../test-data/place-order-page-object.json";
 
-test("E-commerce PO automation with traditional locators and hardcode data", async ({ page }) => {
- 
+test.only("E-commerce PO automation with traditional locators and JSON reading", async ({ page }) => {
+
+  // get these values from json file - test-data > place-order-page-object.json
+  /*
   const productName = "iphone 13 pro";
   const username = 'academy123+@gmail.com';
   const password = "Academy123+";
-  
+  */
 
-  const pomManager = new PageObjectManager(page,productName);
+  const pomManager = new PageObjectManager(page,dataset.productName);
   await pomManager.getLoginPage().landOnPage();
-  await pomManager.getLoginPage().validLogin(username, password);
+  await pomManager.getLoginPage().validLogin(dataset.username, dataset.password);
   // await page.waitForLoadState("networkidle"); // not enought, put some control mechanism (crashed)
   await expect(pomManager.getLoginPage().lblFilters).toHaveText("Filters"); // auto-wait working
   // console.log("text : ", await dashboardPage.lblFilters.textContent());
 
-  await pomManager.getDashboardPage().selectAndAddToCart(productName);
+  await pomManager.getDashboardPage().selectAndAddToCart(dataset.productName);
   await pomManager.getDashboardPage().clickCartMenu();
 
   await expect(pomManager.getCartPage().productNameInCart.isVisible()).toBeTruthy();
@@ -26,7 +29,7 @@ test("E-commerce PO automation with traditional locators and hardcode data", asy
   await pomManager.getCheckoutPage().pressSequentiallyCountry("ind");
   await pomManager.getCheckoutPage().selectCountry("India");
 
-  await expect(pomManager.getCheckoutPage().lblUsername).toHaveText(username);
+  await expect(pomManager.getCheckoutPage().lblUsername).toHaveText(dataset.username);
 
   await pomManager.getCheckoutPage().clickPlaceOrderBtn();
 

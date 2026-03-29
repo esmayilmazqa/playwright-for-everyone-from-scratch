@@ -60,9 +60,10 @@ async function readExcell(worksheet, searchText, change) {
     Upload the file
     Verify the modification on browser
  */
-test.only("Download and upload validation test by using excel utils", async ({ browser }) => {
+test("Download and upload validation test by using excel utils", async ({ browser }) => {
     const textSearch = "Banana";
     const newPrice = 350;
+    // for windows :
     const filePath = getDefaultDownloadPath() + "\\download.xlsx"; // C:\Users\ASUS\Downloads\download.xlsx
     // console.log("Browser default download path:", defaultDownloadPath);
 
