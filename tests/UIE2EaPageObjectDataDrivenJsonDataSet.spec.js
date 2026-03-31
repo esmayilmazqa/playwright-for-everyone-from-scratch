@@ -1,60 +1,62 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 import { PageObjectManager } from '../page-objects/page-object-manager';
-import dataset from "../test-data/place-order-page-object.json";
+import dataset from "../test-data/place-order-page-object-data-set.json";
 
-test("E-commerce PO automation with traditional locators and JSON reading", async ({ page }) => {
+for (const data of dataset) {
+  test.only(`E-commerce PO automation with traditional locators ${data.productName}`, async ({ page }) => {
 
-  // get these values from json file - test-data > place-order-page-object.json
-  /*
-  const productName = "iphone 13 pro";
-  const username = 'academy123+@gmail.com';
-  const password = "Academy123+";
-  */
+    // get these values from json file - test-data > place-order-page-object.json
+    /*
+    const productName = "iphone 13 pro";
+    const username = 'academy123+@gmail.com';
+    const password = "Academy123+";
+    */
 
-  const pomManager = new PageObjectManager(page,dataset.productName);
-  await pomManager.getLoginPage().landOnPage();
-  await pomManager.getLoginPage().validLogin(dataset.username, dataset.password);
-  // await page.waitForLoadState("networkidle"); // not enought, put some control mechanism (crashed)
-  await expect(pomManager.getLoginPage().lblFilters).toHaveText("Filters"); // auto-wait working
-  // console.log("text : ", await dashboardPage.lblFilters.textContent());
+    const pomManager = new PageObjectManager(page, data.productName);
+    await pomManager.getLoginPage().landOnPage();
+    await pomManager.getLoginPage().validLogin(data.username, data.password);
+    // await page.waitForLoadState("networkidle"); // not enought, put some control mechanism (crashed)
+    await expect(pomManager.getLoginPage().lblFilters).toHaveText("Filters"); // auto-wait working
+    // console.log("text : ", await dashboardPage.lblFilters.textContent());
 
-  await pomManager.getDashboardPage().selectAndAddToCart(dataset.productName);
-  await pomManager.getDashboardPage().clickCartMenu();
+    await pomManager.getDashboardPage().selectAndAddToCart(data.productName);
+    await pomManager.getDashboardPage().clickCartMenu();
 
-  await expect(pomManager.getCartPage().productNameInCart.isVisible()).toBeTruthy();
+    await expect(pomManager.getCartPage().productNameInCart.isVisible()).toBeTruthy();
 
-  // check checkout elements
-  await pomManager.getCartPage().clickCheckoutBtn();
-  await pomManager.getCheckoutPage().pressSequentiallyCountry("ind");
-  await pomManager.getCheckoutPage().selectCountry("India");
+    // check checkout elements
+    await pomManager.getCartPage().clickCheckoutBtn();
+    await pomManager.getCheckoutPage().pressSequentiallyCountry("ind");
+    await pomManager.getCheckoutPage().selectCountry("India");
 
-  await expect(pomManager.getCheckoutPage().lblUsername).toHaveText(dataset.username);
+    await expect(pomManager.getCheckoutPage().lblUsername).toHaveText(data.username);
 
-  await pomManager.getCheckoutPage().clickPlaceOrderBtn();
-
-
-  // order details page
-  await expect(await pomManager.getOrderDetailsPage().msgThankYou).toHaveText(" Thankyou for the order. ");
-
-  const orderId = await pomManager.getOrderDetailsPage().orderId.textContent();
-  // await page.locator("td.em-spacer-1 label.ng-star-inserted").textContent();
-  console.log(orderId);
+    await pomManager.getCheckoutPage().clickPlaceOrderBtn();
 
 
-  // OrdersPage 
-  await pomManager.getDashboardPage().clickOrdersMenu();
-  await pomManager.getOrdersPage().clickViewBtnForAddedOrder(orderId);
+    // order details page
+    await expect(await pomManager.getOrderDetailsPage().msgThankYou).toHaveText(" Thankyou for the order. ");
+
+    const orderId = await pomManager.getOrderDetailsPage().orderId.textContent();
+    // await page.locator("td.em-spacer-1 label.ng-star-inserted").textContent();
+    console.log(orderId);
 
 
-  // Order Summary
-  const lblOrder = await pomManager.getOrderDetailsPage().getOrderId();
-  expect(lblOrder).toHaveText(orderId?.replaceAll("|", "").replaceAll(" ", ""));
+    // OrdersPage 
+    await pomManager.getDashboardPage().clickOrdersMenu();
+    await pomManager.getOrdersPage().clickViewBtnForAddedOrder(orderId);
 
 
-  await page.pause();
+    // Order Summary
+    const lblOrder = await pomManager.getOrderDetailsPage().getOrderId();
+    expect(lblOrder).toHaveText(orderId?.replaceAll("|", "").replaceAll(" ", ""));
 
-});
+
+    await page.pause();
+
+  });
+}
 
 test("E-Commerce App by using PW Special Locators", async ({ page }) => {
   const productName = "iphone 13 pro";
