@@ -1,5 +1,5 @@
 import ExcelJS from "exceljs";
-import { test, page, browser, expect } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import * as os from 'os';
 import * as path from 'path';
 

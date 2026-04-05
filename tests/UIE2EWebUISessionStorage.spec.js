@@ -1,4 +1,4 @@
-import { test, expect, browser } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 let webContext;
 
 test.beforeAll(async ({ browser }) => {

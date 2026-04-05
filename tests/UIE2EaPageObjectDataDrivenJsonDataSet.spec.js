@@ -1,10 +1,10 @@
-// @ts-check
 import { test, expect } from '@playwright/test';
 import { PageObjectManager } from '../page-objects/page-object-manager';
-import dataset from "../test-data/place-order-page-object-data-set.json";
+// import dataset from "../test-data/place-order-page-object-data-set.json";
+import dataset from "../test-data/place-order-page-object-data-set.json" assert {type:"json"};
 
 for (const data of dataset) {
-  test.only(`E-commerce PO automation with traditional locators ${data.productName}`, async ({ page }) => {
+  test(`E-commerce PO automation with traditional locators ${data.productName}`, async ({ page }) => {
 
     // get these values from json file - test-data > place-order-page-object.json
     /*

@@ -1,4 +1,3 @@
-// @ts-check
 import { test, expect } from '@playwright/test';
 
 test("E-commerce automation with traditional locators - locator API -", async ({ page }) => {

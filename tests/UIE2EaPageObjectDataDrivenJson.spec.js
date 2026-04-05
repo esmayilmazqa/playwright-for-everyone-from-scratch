@@ -1,7 +1,7 @@
-// @ts-check
 import { test, expect } from '@playwright/test';
 import { PageObjectManager } from '../page-objects/page-object-manager';
-import dataset from "../test-data/place-order-page-object.json";
+// import dataset from "../test-data/place-order-page-object.json"; - ES Module ile çakisti sanırım
+import dataset from "../test-data/place-order-page-object.json" assert { type: 'json' };
 
 test("E-commerce PO automation with traditional locators and JSON reading", async ({ page }) => {
 

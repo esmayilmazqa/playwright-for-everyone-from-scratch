@@ -1,4 +1,4 @@
-import { test, expect, page } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 
 test("@HACK Network Request Intercept for Security Test", async ({ page }) => { // npx playwright test --grep HACK
 

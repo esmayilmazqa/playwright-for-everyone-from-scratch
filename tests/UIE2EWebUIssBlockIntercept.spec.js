@@ -1,4 +1,4 @@
-import {test, page, browser, expect  } from "@playwright/test";
+import {test, expect  } from "@playwright/test";
 
 test("Block API call for .css files", async ({ browser }) => {
     const context = await browser.newContext();

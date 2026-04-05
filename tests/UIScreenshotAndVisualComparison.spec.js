@@ -1,4 +1,4 @@
-import { test, page, expect } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 
 test("Taking full and Partial Screenshot", async({page})=>{
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
